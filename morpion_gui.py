@@ -140,7 +140,7 @@ class MorpionGame:
 
     # ---------- Construction UI ----------
     def build_ui(self):
-        # Top bar
+        # Barre du haut
         top = ttk.Frame(self.root, padding=10)
         top.pack(fill="x")
 
@@ -182,12 +182,12 @@ class MorpionGame:
         self.canvas = tk.Canvas(self.root, width=w, height=h, highlightthickness=0, cursor="hand2")
         self.canvas.pack(padx=10, pady=10)
 
-        # Bindings
+        # Boutons
         self.canvas.bind("<Button-1>", self.on_click)
         self.canvas.bind("<Motion>", self.on_motion)
         self.canvas.bind("<Leave>", lambda e: self.set_hover(None))
 
-        # Pre-draw grid
+        # Grille
         self.draw_grid()
 
     def apply_theme(self):
@@ -205,7 +205,6 @@ class MorpionGame:
         self.root.configure(bg=self.colors["bg"])
         self.canvas.configure(bg=self.colors["bg"])
         style = ttk.Style(self.root)
-        # generic theme-ish tweaks
         try:
             style.theme_use("clam")
         except:
@@ -232,7 +231,7 @@ class MorpionGame:
 
     def draw_grid(self, force=False):
         self.canvas.delete("grid")
-        # grid lines
+        # Grille
         for i in range(1,3):
             # vertical
             x = self.margin + i*self.cell_size
@@ -244,14 +243,13 @@ class MorpionGame:
                                     fill=self.colors["grid"], width=3, tags="grid")
 
         if force:
-            # redraw marks
+            # Redessiner
             self.canvas.delete("mark")
             for r in range(3):
                 for c in range(3):
                     if self.board[r][c] in JOUEURS:
                         self.draw_mark_static(r, c, self.board[r][c])
 
-        # overlay win line if needed
         self.canvas.delete("winline")
         if self.win_coords:
             self.draw_win_line(self.win_coords)
